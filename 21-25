@@ -1,0 +1,117 @@
+21. String Trim End
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    io::stdin().read_line(&mut input).unwrap();
+
+    let result = input.trim_end();
+
+    println!("Output: '{}'", result);
+}
+
+Input: " hello "
+Output: " hello"
+
+22. String Reverse
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    io::stdin().read_line(&mut input).unwrap();
+
+    let input = input.trim(); // remove newline
+    let reversed: String = input.chars().rev().collect();
+
+    println!("Output: '{}'", reversed);
+}
+
+Input:  hello
+Output: olleh
+
+23. String Capitalize
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    let input = input.trim();
+
+    let mut chars = input.chars();
+
+    let result = match chars.next() {
+        Some(first) => first.to_uppercase().collect::<String>() + chars.as_str(),
+        None => String::new(),
+    };
+
+    println!("Output: '{}'", result);
+}
+
+Input:  hello
+Output: Hello
+
+24. String Title Case
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    let input = input.trim();
+
+    let result: String = input
+        .split_whitespace()
+        .map(|word| {
+            let mut chars = word.chars();
+            match chars.next() {
+                Some(first) => first.to_uppercase().collect::<String>() + chars.as_str(),
+                None => String::new(),
+            }
+        })
+        .collect::<Vec<String>>()
+        .join(" ");
+
+    println!("Output: '{}'", result);
+}
+
+Input:  hello world
+Output: Hello World
+
+25.String to Snake Case
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    let input = input.trim();
+
+    let result: String = input
+        .to_lowercase()
+        .split_whitespace()
+        .collect::<Vec<&str>>()
+        .join("_");
+
+    println!("Output: '{}'", result);
+}
+
+Input:  Hello World 
+Output: hello_world
+
+
