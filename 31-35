@@ -1,0 +1,135 @@
+31.String Unescape HTML
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    let input = input.trim();
+
+    let mut result = input.replace("&lt;", "<");
+    result = result.replace("&gt;", ">");
+    result = result.replace("&amp;", "&");
+    result = result.replace("&quot;", "\"");
+    result = result.replace("&#39;", "'");
+
+    println!("Output: '{}'", result);
+}
+
+Input:  &lt;div&gt;
+Output: <div>
+
+32.String Escape Regex
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    let input = input.trim();
+
+    let mut result = String::new();
+
+    for ch in input.chars() {
+        match ch {
+            '.' | '+' | '*' | '?' | '^' | '$' | '(' | ')' |
+            '[' | ']' | '{' | '}' | '|' | '\\' => {
+                result.push('\\');
+                result.push(ch);
+            }
+            _ => result.push(ch),
+        }
+    }
+
+    println!("Output: '{}'", result);
+}
+
+Input:  hello.world
+Output: hello\.world
+
+33.String Truncate
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+    let mut max_len_input = String::new();
+
+    println!("Enter a string:");
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    println!("Enter max length:");
+    std::io::stdin().read_line(&mut max_len_input).unwrap();
+
+    let input = input.trim();
+    let max_len: usize = max_len_input.trim().parse().unwrap();
+
+    let ellipsis = "...";
+
+    let result = if input.len() > max_len {
+        let cut_len = max_len.saturating_sub(ellipsis.len());
+        format!("{}{}", &input[..cut_len], ellipsis)
+    } else {
+        input.to_string()
+    };
+
+    println!("Output: '{}'", result);
+}
+
+Input:  "Hello world", 8
+Output: Hello...
+
+34.String Count Occurrences
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+    let mut substr = String::new();
+
+    println!("Enter the main string:");
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    println!("Enter the substring:");
+    std::io::stdin().read_line(&mut substr).unwrap();
+
+    let input = input.trim();
+    let substr = substr.trim();
+
+    let count = input.matches(substr).count();
+
+    println!("Output: {}", count);
+}
+
+Input:  "hello hello hello", "hello"
+Output: 3
+
+35.String Remove Whitespace
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    let input = input.trim();
+
+    let result: String = input
+        .chars()
+        .filter(|c| !c.is_whitespace())
+        .collect();
+
+    println!("Output: '{}'", result);
+}
+
+Input:  hello world
+Output: helloworld
+
