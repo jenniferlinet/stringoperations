@@ -1,0 +1,160 @@
+26.String to Camel Case
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    let input = input.trim().to_lowercase();
+
+    let mut words = input.split_whitespace();
+
+    let mut result = String::new();
+
+    if let Some(first) = words.next() {
+        result.push_str(first);
+    }
+
+    for word in words {
+        let mut chars = word.chars();
+        if let Some(first_char) = chars.next() {
+            result.push_str(&first_char.to_uppercase().collect::<String>());
+            result.push_str(chars.as_str());
+        }
+    }
+
+    println!("Output: '{}'", result);
+}
+
+Input:  hello world
+Output: helloWorld
+
+27.String to Pascal Case
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    let input = input.trim().to_lowercase();
+
+    let result: String = input
+        .split('_')
+        .map(|word| {
+            let mut chars = word.chars();
+            match chars.next() {
+                Some(first) => first.to_uppercase().collect::<String>() + chars.as_str(),
+                None => String::new(),
+            }
+        })
+        .collect();
+
+    println!("Output: '{}'", result);
+}
+
+Input:  hello_world
+Output: HelloWorld
+
+28.String to Kebab Case
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    let input = input.trim();
+
+    let mut result = String::new();
+
+    for (i, ch) in input.chars().enumerate() {
+        if ch.is_uppercase() {
+            if i != 0 {
+                result.push('-');
+            }
+            result.push(ch.to_ascii_lowercase());
+        } else {
+            result.push(ch);
+        }
+    }
+
+    println!("Output: '{}'", result);
+}
+
+Input:  HelloWorld
+Output: hello-world
+
+29.String Slugify
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    let input = input.trim().to_lowercase();
+
+    let mut result = String::new();
+    let mut prev_dash = false;
+
+    for ch in input.chars() {
+        if ch.is_alphanumeric() {
+            result.push(ch);
+            prev_dash = false;
+        } else if ch.is_whitespace() && !prev_dash {
+            result.push('-');
+            prev_dash = true;
+        }
+    }
+
+    // Remove trailing dash if any
+    let result = result.trim_matches('-');
+
+    println!("Output: '{}'", result);
+}
+
+Input:  Hello World!
+Output: hello-world
+
+30.String Escape HTML
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    let input = input.trim();
+
+    let mut result = String::new();
+
+    for ch in input.chars() {
+        match ch {
+            '<' => result.push_str("&lt;"),
+            '>' => result.push_str("&gt;"),
+            '&' => result.push_str("&amp;"),
+            '"' => result.push_str("&quot;"),
+            '\'' => result.push_str("&#39;"),
+            _ => result.push(ch),
+        }
+    }
+
+    println!("Output: '{}'", result);
+}
+
+Input:  <div>
+Output: &lt;div&gt;
+
+
