@@ -1,0 +1,132 @@
+36.String Normalize Spaces
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    let input = input.trim();
+
+    let result: String = input
+        .split_whitespace()
+        .collect::<Vec<&str>>()
+        .join(" ");
+
+    println!("Output: '{}'", result);
+}
+
+Input:  hello   world
+Output: hello world
+
+37.String Palindrome Check
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    let input = input.trim();
+
+    let reversed: String = input.chars().rev().collect();
+
+    let is_palindrome = input == reversed;
+
+    println!("Output: {}", is_palindrome);
+}
+
+Input:  racecar
+Output: true
+
+38.String Anagram Check
+
+use std::io;
+
+fn main() {
+    let mut str1 = String::new();
+    let mut str2 = String::new();
+
+    println!("Enter first string:");
+    std::io::stdin().read_line(&mut str1).unwrap();
+
+    println!("Enter second string:");
+    std::io::stdin().read_line(&mut str2).unwrap();
+
+    let str1 = str1.trim();
+    let str2 = str2.trim();
+
+    let mut chars1: Vec<char> = str1.chars().collect();
+    let mut chars2: Vec<char> = str2.chars().collect();
+
+    chars1.sort();
+    chars2.sort();
+
+    let is_anagram = chars1 == chars2;
+
+    println!("Output: {}", is_anagram);
+}
+
+Input:  listen, silent
+Output: true
+
+39.String ROT13 Cipher
+
+use std::io;
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    std::io::stdin().read_line(&mut input).unwrap();
+
+    let input = input.trim();
+
+    let result: String = input
+        .chars()
+        .map(|c| {
+            if c.is_ascii_lowercase() {
+                (((c as u8 - b'a' + 13) % 26) + b'a') as char
+            } else if c.is_ascii_uppercase() {
+                (((c as u8 - b'A' + 13) % 26) + b'A') as char
+            } else {
+                c
+            }
+        })
+        .collect();
+
+    println!("Output: '{}'", result);
+}
+
+Input:  hello
+Output: uryyb
+
+40.String Base64 Encode
+
+Step 1: Add dependency in Cargo.toml
+[dependencies]
+base64 = "0.21"
+
+Step 2: Rust Program
+use std::io;
+use base64::{engine::general_purpose, Engine as _};
+
+fn main() {
+    let mut input = String::new();
+
+    println!("Enter a string:");
+    io::stdin().read_line(&mut input).unwrap();
+
+    let input = input.trim();
+
+    let encoded = general_purpose::STANDARD.encode(input);
+
+    println!("Output: '{}'", encoded);
+}
+
+Input:  hello
+Output: aGVsbG8=
